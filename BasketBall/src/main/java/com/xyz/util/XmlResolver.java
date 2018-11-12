@@ -2,6 +2,7 @@ package com.xyz.util;
 
 import java.io.File;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -9,12 +10,40 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.xyz.preparation.InitManager;
+import com.xyz.preparation.SqlXmlFullPreparation;
+
 public class XmlResolver extends DefaultHandler{
 
-	SAXParserFactory factory;
+	private ThreadLocal<SAXParser> parser = new ThreadLocal<SAXParser>() {
+		protected SAXParser initialValue() {
+			SAXParser newParser = null;
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			try {
+				newParser = factory.newSAXParser();
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			} catch (SAXException e) {
+				e.printStackTrace();
+			}
+			return newParser;
+		};
+	};
 	
-	private XmlResolver () {
-		factory = SAXParserFactory.newInstance();
+
+	public enum Instance {
+		
+		XmlResolver;		
+		private XmlResolver instance = null;
+		
+		private Instance() {
+			instance = new XmlResolver();
+		}
+		public XmlResolver getInstance() {
+			return instance;
+		}
+		
 	}
 	
 	@Override
@@ -47,17 +76,9 @@ public class XmlResolver extends DefaultHandler{
 		super.startElement(uri, localName, qName, attributes);
 	}
 
-	public void parseXmlToPojo(String mappingLocation){
-		SAXParser parser = factory.newSAXParser();
-		File sqlXmls = new File(mappingLocation);
-		if(sqlXmls.isDirectory()) {
-			for(File sql : sqlXmls.listFiles()) {
-				
-			}
-		}
-        
-        
-        parser.parse(new File("books.xml"), new XmlResolver());
+	public void parseXml(File sqlFile){
+		
+        parser.parse(sqlFile, new XmlResolver());
 
 	}
 }

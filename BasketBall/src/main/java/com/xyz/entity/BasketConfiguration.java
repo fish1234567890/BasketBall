@@ -49,8 +49,10 @@ public class BasketConfiguration implements InitializingBean{
 	 * */
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		if(mappingLocation == null || dbType == null || loadStrategy == null) {
+			throw new RuntimeException("初始化参数错误 -"+mappingLocation+","+dbType+","+loadStrategy);
+		}
 		InitManager strategy = ParsingStartegyFactory.getInstance(loadStrategy);
 		strategy.init(mappingLocation);
 	}
-	
 }
