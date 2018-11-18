@@ -1,5 +1,16 @@
 package com.xyz.preparation;
 
+/**
+ * 	Copyright (C), 2006-2010, Xu.
+ * 
+ * 	文件名 : SqlConfiguration.java
+ * 
+ * 	生成策略类的工厂类
+ * 
+ * 	@author xuchongguang
+ * 	@since 2018-11-11
+ * 	@version 1.0.0
+ * */
 public class ParsingStartegyFactory {
 	
 	public static final String Strategy_Priority = "1";
