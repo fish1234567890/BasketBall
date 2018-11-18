@@ -1,6 +1,7 @@
 package com.xyz.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -10,12 +11,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.xyz.preparation.InitManager;
-import com.xyz.preparation.SqlXmlFullPreparation;
-
 public class XmlResolver extends DefaultHandler{
 
-	private ThreadLocal<SAXParser> parser = new ThreadLocal<SAXParser>() {
+	private ThreadLocal<SAXParser> parser = new ThreadLocal<SAXParser>() ;
 		protected SAXParser initialValue() {
 			SAXParser newParser = null;
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -29,7 +27,6 @@ public class XmlResolver extends DefaultHandler{
 			}
 			return newParser;
 		};
-	};
 	
 
 	public enum Instance {
@@ -78,7 +75,15 @@ public class XmlResolver extends DefaultHandler{
 
 	public void parseXml(File sqlFile){
 		
-        parser.parse(sqlFile, new XmlResolver());
+        try {
+			parser.get().parse(sqlFile, new XmlResolver());
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
