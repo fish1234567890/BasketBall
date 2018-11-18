@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- sql文件的位置 -->
+	<mappingLocation>main.com.xyz.sqlxml</mappingLocation>
+	<!-- 使用的数据库类型  现在支持oracle mysql -->
+	<dbType>oracle</dbType>
+	<!-- 何时加载sqlxml文件的策略  1.启动加载  2.使用前加载  3.混合加载 -->
+	<load>1</load>
+</config>
