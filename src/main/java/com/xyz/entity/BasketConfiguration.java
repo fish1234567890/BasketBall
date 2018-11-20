@@ -1,13 +1,15 @@
 package com.xyz.entity;
 
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.xyz.preparation.InitManager;
 import com.xyz.preparation.ParsingStartegyFactory;
+
+import lombok.Data;
 
 /**
  * 	Copyright (C), 2006-2010, Xu.
@@ -37,8 +39,11 @@ public class BasketConfiguration implements InitializingBean{
 	/* sqlXml文件的加载策略（1：全部加载  2：优先级加载（推荐）） */
 	private String loadStrategy;
 	
-	/*存放sqlXml文件*/
-	public static LinkedHashMap<String, SqlConfiguration> sqlXmls ;
+	/*存放第一优先级的sqlXml文件*/
+	public static final HashMap<String, SqlConfiguration> sqlXmls_High_Priority = new HashMap<>() ;
+	
+	/*存放第其余优先级的sqlXml文件*/
+	public static final LinkedHashMap<String, SqlConfiguration> sqlXmls_other_Priority = new LinkedHashMap<>() ;
 	
 	private BasketConfiguration() {}
 

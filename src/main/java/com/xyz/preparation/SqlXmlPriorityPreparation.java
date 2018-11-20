@@ -1,5 +1,7 @@
 package com.xyz.preparation;
 
+import java.io.File;
+
 /**
  * 	Copyright (C), 2006-2010, Xu.
  * 
@@ -15,7 +17,14 @@ public class SqlXmlPriorityPreparation implements InitManager{
 
 	@Override
 	public void init(String mappingLocation) {
-		// TODO Auto-generated method stub
+		File sqlFiles = new File(mappingLocation);
+		if(!sqlFiles.exists()) {
+			throw new RuntimeException("映射文件路径不存在");
+		}
+		File[] sqlFileList = sqlFiles.listFiles();
+		for(File sqlFile : sqlFileList) {
+			//TODO 按优先级解析
+		}
 		
 	}
 	public enum Instance {
