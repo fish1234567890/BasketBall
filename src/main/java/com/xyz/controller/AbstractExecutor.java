@@ -13,7 +13,7 @@ import java.util.Map;
  * 	由于这两个方法是所有调度类都需要的方法并且我希望这些方法都仅仅是在实现类内部可用（这样可以最大可能的
  * 	避免内存逃逸现象的出现），
  * 	所以不能将这两个方法放在Executor接口中声明，因此我单独开了这一个抽象类，
- *  继承自Executor，实现了两个protect方法。
+ *  继承自Executor，声明了两个protect方法。
  *  以后如果还要新增其他所有调度类都需要并且希望仅仅是在实现类内部可用的方法，可以在这里面声明
  *  如果需要新增的方法是对外提供的，直接在Executor接口声明就好~
  *  
@@ -30,6 +30,18 @@ import java.util.Map;
 public abstract class AbstractExecutor implements Executor{
 
 	protected abstract String getSql(String sqlName , Map<String,Object> params);
+	
+	protected abstract String getSql(String sqlName , String param);
+	
+	protected abstract String getSql(String sqlName , int param);
+	
+	protected abstract String getSql(String sqlName , double params);
+	
+	protected abstract String getSql(String sqlName , boolean params);
+	
+	protected abstract <T> String getSql(String sqlName , Class<T> params);
+	
+	protected abstract String getSql(String sqlName);
 	
 	protected abstract ResultSet runSql(String sql);
 }
