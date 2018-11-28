@@ -18,4 +18,5 @@ import java.util.Map;
 public interface Executor {
 	
 	Object execute(String sqlName , Map<String,Object> params);
+
 }

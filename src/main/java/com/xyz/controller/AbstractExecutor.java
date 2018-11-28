@@ -1,5 +1,6 @@
 package com.xyz.controller;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.util.Map;
 /**
@@ -29,19 +30,32 @@ import java.util.Map;
  * */
 public abstract class AbstractExecutor implements Executor{
 
-	protected abstract String getSql(String sqlName , Map<String,Object> params);
-	
-	protected abstract String getSql(String sqlName , String param);
-	
-	protected abstract String getSql(String sqlName , int param);
+	/*protected abstract String getSql(String sqlName , int param);
 	
 	protected abstract String getSql(String sqlName , double params);
 	
-	protected abstract String getSql(String sqlName , boolean params);
+	protected abstract String getSql(String sqlName , boolean params);*/
 	
-	protected abstract <T> String getSql(String sqlName , Class<T> params);
+	protected String getSql(String sqlName, Map<String,Object> params) {
+		String sql = resolve(sqlName , params);
+		return sql;
+	}
+	protected String getSql(String sqlName) {
+		String sql = resolve(sqlName , null);
+		return sql;
+	}
 	
-	protected abstract String getSql(String sqlName);
+	protected abstract Object runSql(String sql);
 	
-	protected abstract ResultSet runSql(String sql);
+	protected String resolve(String sqlName , Object params) {
+		//1.根据sqlName找到sql语句
+		if(sqlName == null || !sqlName.contains(".")) 
+			throw new RuntimeException("sqlName格式错误： 我们需要【文件名】.【sql名】，但现在是" + sqlName);
+		int index = sqlName.indexOf(".");
+		File sqlFile = new File(sqlName.substring(0, index));
+		String sql =  sqlName.substring(index+1);
+		//TODO 调用sql预处理层的方法返回一个String类型的sql
+		return "";
+	}
+	
 }

@@ -1,6 +1,5 @@
 package com.xyz.controller;
 
-import java.io.File;
 import java.sql.ResultSet;
 import java.util.Map;
 
@@ -16,31 +15,9 @@ import java.util.Map;
  * 	@since 2018-11-11
  * 	@version 1.0.0
  * */
-public abstract class AbstarctQueryExecutor extends AbstractExecutor {
+public class QueryExecutor extends AbstractExecutor {
 	
-	
-	private String resolve(String sqlName , Object params) {
-		if(sqlName == null || !sqlName.contains(".")) 
-			throw new RuntimeException("sqlName格式错误： 我们需要【文件名】.【sql名】，但现在是" + sqlName);
-		int index = sqlName.indexOf(".");
-		File sqlFile = new File(sqlName.substring(0, index));
-		String sql =  sqlName.substring(index+1);
-		//TODO 调用sql预处理层的方法返回一个String类型的sql
-		return "";
-	}
-	
-	@Override
-	protected String getSql(String sqlName , Map<String,Object> params) {
-		String sql = resolve(sqlName,params);
-		return sql;
-	}
-	
-	@Override
-	protected String getSql(String sqlName, String param) {
-		String sql = resolve(sqlName,param);
-		return sql;
-	}
-
+/*
 	@Override
 	protected String getSql(String sqlName, int param) {
 		String sql = resolve(sqlName , param);
@@ -63,13 +40,7 @@ public abstract class AbstarctQueryExecutor extends AbstractExecutor {
 	protected <T> String getSql(String sqlName, Class<T> params) {
 		String sql = resolve(sqlName , params);
 		return sql;
-	}
-
-	@Override
-	protected String getSql(String sqlName) {
-		String sql = resolve(sqlName , null);
-		return sql;
-	}
+	}*/
 
 	@Override
 	protected final ResultSet runSql(String sql) {
