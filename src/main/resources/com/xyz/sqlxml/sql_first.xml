@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<nameSpace>
-	<sql source = ""></sql>
-	<sql></sql>
-</nameSpace>
+<filename value="sql_first.xml">
+	<sql id="mysql1" datasource="">
+		select * from user
+	</sql>
+
+	<sql id="mysql2" datasource="">
+		select * from teacher
+	</sql>
+</filename>

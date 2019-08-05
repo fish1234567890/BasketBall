@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * 	Copyright (C), 2006-2010, Xu.
  * 
- * 	文件名 : SqlConfiguration.java
+ * 	文件名 : SqlXmlFileHolder.java
  * 
  * 	策略类--优先级加载
  * 

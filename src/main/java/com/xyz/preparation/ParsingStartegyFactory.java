@@ -3,7 +3,7 @@ package com.xyz.preparation;
 /**
  * 	Copyright (C), 2006-2010, Xu.
  * 
- * 	文件名 : SqlConfiguration.java
+ * 	文件名 : SqlXmlFileHolder.java
  * 
  * 	生成策略类的工厂类
  * 
@@ -13,15 +13,15 @@ package com.xyz.preparation;
  * */
 public class ParsingStartegyFactory {
 	
-	public static final String Strategy_Priority = "1";
+	public static final String STRATEGY_PRIORITY = "1";
 	
-	public static final String Strategy_Full = "0";
+	public static final String STRATEGY_FULL = "0";
 	
 	public static InitManager getInstance(String strategy) {
-		if(strategy == null || "".equals(strategy) || Strategy_Priority.equals(strategy)) {
+		if(strategy == null || "".equals(strategy) || STRATEGY_PRIORITY.equals(strategy)) {
 			return SqlXmlPriorityPreparation.Instance.SqlXmlPriorityPreparation.getInstance();
-		}else if(Strategy_Full.equals(strategy)){
-			return SqlXmlFullPreparation.Instance.SqlXmlFullPreparation.getInstance();
+		}else if(STRATEGY_FULL.equals(strategy)){
+			return new SqlXmlFullPreparation();
 		}else {
 			throw new RuntimeException("无法匹配相应的策略");
 		}

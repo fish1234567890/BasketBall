@@ -1,13 +1,14 @@
 package com.xyz.preparation;
 
 import java.io.File;
+import java.net.URL;
 
 import com.xyz.util.XmlResolver;
 
 /**
  * 	Copyright (C), 2006-2010, Xu.
  * 
- * 	文件名 : SqlConfiguration.java
+ * 	文件名 : SqlXmlFileHolder.java
  * 
  * 	策略类--全部加载
  * 
@@ -19,13 +20,13 @@ public class SqlXmlFullPreparation implements InitManager{
 
 	private XmlResolver resolver ;
 	
-	private SqlXmlFullPreparation() {
+	public SqlXmlFullPreparation() {
 		resolver = XmlResolver.Instance.XmlResolver.getInstance();
 	}
 	
-	@Override
 	public void init(String mappingLocation) {
-		File sqlFiles = new File(mappingLocation);
+		String path = getClass().getResource(mappingLocation).getFile();
+		File sqlFiles = new File(path);
 		if(!sqlFiles.exists()) {
 			throw new RuntimeException("映射文件路径不存在");
 		}
@@ -35,17 +36,4 @@ public class SqlXmlFullPreparation implements InitManager{
 		}
 	}
 
-	public enum Instance {
-		
-		SqlXmlFullPreparation;		
-		private SqlXmlFullPreparation instance = null;
-		
-		private Instance() {
-			instance = new SqlXmlFullPreparation();
-		}
-		public InitManager getInstance() {
-			return instance;
-		}
-		
-	}
 }

@@ -1,6 +1,12 @@
 package com.xyz.controller;
 
+import com.xyz.Translator.Translator;
+import com.xyz.entity.RunableSql;
+import com.xyz.executor.SelectExecutor;
+import com.xyz.resultHandler.ResultHandler;
+
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,64 +21,24 @@ import java.util.Map;
  * 	@since 2018-11-11
  * 	@version 1.0.0
  * */
-public class QueryExecutor extends AbstractExecutor {
-	
-/*
-	@Override
-	protected String getSql(String sqlName, int param) {
-		String sql = resolve(sqlName , param);
-		return sql;
+public class QueryExecutor  {
+
+	final SelectExecutor executor = new SelectExecutor();
+
+	public List<?> query(String id) throws ClassNotFoundException{
+		return baseQuery(id,null);
 	}
 
-	@Override
-	protected String getSql(String sqlName, double params) {
-		String sql = resolve(sqlName , params);
-		return sql;
+	public List<?> query(String id, Map<String,Object> params) throws ClassNotFoundException {
+		return baseQuery(id,params);
 	}
 
-	@Override
-	protected String getSql(String sqlName, boolean params) {
-		String sql = resolve(sqlName , params);
-		return sql;
+	private List<?> baseQuery(String id, Map<String,Object> params) throws ClassNotFoundException {
+		//预编译sql，获取最终可执行的sql
+		RunableSql runableSql = Translator.translateSql(id , params);
+		//执行sql
+		ResultSet execute = executor.execute(runableSql);
+		//处理结果集
+		return ResultHandler.formateResult(execute,runableSql.getResultType());
 	}
-
-	@Override
-	protected <T> String getSql(String sqlName, Class<T> params) {
-		String sql = resolve(sqlName , params);
-		return sql;
-	}*/
-
-	@Override
-	protected final ResultSet runSql(String sql) {
-		//TODO 调用sql处理层的方法执行这个sql语句
-		return null;
-	}
-	
-	protected ResultSet getCache(String sql) {
-		//TODO
-		return null;
-	};
-	
-	protected void addToCache(ResultSet result) {
-		
-	}
-	
-	protected Object formatResult(ResultSet result ) {
-		
-		return null;
-		
-	}
-	@Override
-	public Object execute(String sqlName , Map<String , Object> params) {
-		String sql = getSql(sqlName , params);
-		ResultSet result = getCache(sql);
-		if(result == null) {
-			result = runSql(sql);
-			addToCache(result);
-		}
-		return formatResult(result);
-	}
-	
-
-
 }
