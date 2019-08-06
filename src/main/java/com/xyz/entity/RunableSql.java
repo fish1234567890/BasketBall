@@ -1,15 +1,14 @@
 package com.xyz.entity;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 
-public class RunableSql {
+public class RunableSql<T> {
 
     private String sql;
 
     private DataSource datasource;
 
-    private Class resultType;
+    private Class<T> resultType;
 
     public String getSql() {
         return sql;
@@ -27,11 +26,11 @@ public class RunableSql {
         this.datasource = datasource;
     }
 
-    public Class getResultType() {
+    public Class<T> getResultType() {
         return resultType;
     }
 
-    public void setResultType(Class resultType) {
+    public void setResultType(Class<T> resultType) {
         this.resultType = resultType;
     }
 }

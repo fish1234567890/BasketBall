@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<filename value="sql_first.xml">
-	<sql id="mysql1" datasource="">
-		select * from user
+<filename value="sql_first">
+	<sql id="mysql1" resultType="com.xyz.entity.User" datasource="datasource1">
+		select * from com_user_baseinfo
 	</sql>
 
-	<sql id="mysql2" datasource="">
-		select * from teacher
+	<sql id="mysql2"  datasource="datasource1">
+		insert into com_user_baseinfo(email,password) values(
+		'392972016@qq.com','123123'
+		);
 	</sql>
 </filename>

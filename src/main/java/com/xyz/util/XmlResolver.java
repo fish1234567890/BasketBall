@@ -103,6 +103,8 @@ public class XmlResolver extends DefaultHandler{
 			definition = new SqlDefinition();
 			buff = new StringBuilder();
 			definition.setId(attributes.getValue("id"));
+			definition.setResultType(attributes.getValue("resultType"));
+			definition.setDataSource(attributes.getValue("datasource"));
 		}
 		if("filename".equals(qName)){
 			fileName = attributes.getValue("value");

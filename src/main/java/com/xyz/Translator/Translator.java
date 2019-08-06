@@ -8,18 +8,16 @@ import com.xyz.entity.SqlXmlFileHolder;
 import java.util.Map;
 
 public class Translator {
-    public static RunableSql translateSql(String id, Map<String,Object> params) throws ClassNotFoundException {
 
-        String[] split = id.split(".");
+    public static <T> RunableSql<T> translateSql(String id, Map<String,Object> params,Class<T> resultType) throws ClassNotFoundException {
+
+        String[] split = id.split("\\.");
         SqlXmlFileHolder holder = BasketConfiguration.SQLXMLS_HIGH_PRIORITY.get(split[0]);
         SqlDefinition definition = holder.map.get(split[1]);
-        RunableSql runableSql = new RunableSql();
+        RunableSql<T> runableSql = new RunableSql<>();
         runableSql.setSql(definition.getSqlFormate());
         runableSql.setDatasource(BasketConfiguration.dataSourceList.get(definition.getDataSource()));
-        String resultType = definition.getResultType();
-
-        Class<?> aClass = Class.forName(resultType);
-        runableSql.setResultType(aClass.getClass());
+        runableSql.setResultType(resultType);
         if (params != null){
 
         }

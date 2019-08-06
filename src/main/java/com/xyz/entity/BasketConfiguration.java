@@ -29,7 +29,7 @@ public class BasketConfiguration{
 	/* sqlXml文件的存放地址 */
 	private String mappingLocation;
 
-	public static HashMap<String,DruidDataSource> dataSourceList;
+	public static HashMap<String,DruidDataSource> dataSourceList = new HashMap<>();
 
 	/* 需要使用的数据库类型（现在支持mysql，oracle） */
 	private String dbType;
