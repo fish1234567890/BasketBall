@@ -3,6 +3,9 @@ package com.xyz.preparation;
 import java.io.File;
 import java.net.URL;
 
+import com.xyz.entity.BasketConfiguration;
+import com.xyz.entity.XmlFileInfo;
+import com.xyz.util.CommonUtil.FileUtils;
 import com.xyz.util.XmlResolver;
 
 /**
@@ -19,21 +22,44 @@ import com.xyz.util.XmlResolver;
 public class SqlXmlFullPreparation implements InitManager{
 
 	private XmlResolver resolver ;
-	
+
+	private String mappingLocation;
+
 	public SqlXmlFullPreparation() {
 		resolver = XmlResolver.Instance.XmlResolver.getInstance();
 	}
 	
 	public void init(String mappingLocation) {
-		String path = getClass().getResource(mappingLocation).getFile();
-		File sqlFiles = new File(path);
-		if(!sqlFiles.exists()) {
-			throw new RuntimeException("映射文件路径不存在");
+		//赋值语句不要放在这里，后期优化下
+		this.mappingLocation = mappingLocation;
+
+		File sqlFiles = FileUtils.getFromClassByName(mappingLocation);
+		for(File sqlFile : sqlFiles.listFiles()) {
+			loadSingleXmlFile(sqlFile);
 		}
-		File[] sqlFileList = sqlFiles.listFiles();
-		for(File sqlFile : sqlFileList) {
-			resolver.parseXml(sqlFile);
-		}
+		BasketConfiguration.initTime = System.currentTimeMillis();
 	}
 
+	public void reloadXml(){
+		if(System.currentTimeMillis() - BasketConfiguration.initTime < BasketConfiguration.initInterval){
+			return;
+		}
+		File sqlFiles = FileUtils.getFromClassByName(mappingLocation);
+		for (File sqlFile : sqlFiles.listFiles()) {
+			XmlFileInfo xmlFileInfo = BasketConfiguration.XMLFILELIST.get(sqlFile.getName());
+			if(sqlFile.lastModified() != xmlFileInfo.getLastModifyTime()){
+				loadSingleXmlFile(sqlFile);
+			}
+		}
+		BasketConfiguration.initTime = System.currentTimeMillis();
+	}
+
+	/**
+	 * 加载单个sqlXml文件
+	 * @param sqlFile
+	 */
+	private void loadSingleXmlFile(File sqlFile){
+		resolver.parseXml(sqlFile);
+		BasketConfiguration.XMLFILELIST.put(sqlFile.getName(),new XmlFileInfo(sqlFile.getName(),sqlFile,sqlFile.lastModified()));
+	}
 }

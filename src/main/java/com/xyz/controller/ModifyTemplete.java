@@ -5,12 +5,13 @@ import com.xyz.entity.RunableSql;
 import com.xyz.executor.ModifyExecutor;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ModifyTemplete {
 
     final ModifyExecutor executor = new ModifyExecutor();
-
+    final private Translator translator = new Translator();
     /**
      * 根据一个sql的id进行查询
      *
@@ -53,10 +54,15 @@ public class ModifyTemplete {
         return baseExecute(id,map,Integer.class);
     }
 
+    public Integer executeBatch(String id, List<Map<String,Object>>params){
+        return null;
+    }
+
     private <T> Integer baseExecute(String id, Map<String,Object> params,Class<T> resultType) throws Exception {
         //预编译sql，获取最终可执行的sql
-        RunableSql<T> runableSql = Translator.translateSql(id, params,resultType);
+        RunableSql<T> runableSql = translator.getRunableSql(id, params,resultType);
         //执行sql
         return executor.execute(runableSql);
     }
 }
+

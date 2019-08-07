@@ -1,6 +1,7 @@
 package com.xyz.entity;
 
 
+import java.io.File;
 import java.util.*;
 
 import com.alibaba.druid.pool.DruidDataSource;
@@ -27,7 +28,7 @@ import com.xyz.preparation.ParsingStartegyFactory;
 public class BasketConfiguration{
 
 	/* sqlXml文件的存放地址 */
-	private String mappingLocation;
+	public static String mappingLocation;
 
 	public static HashMap<String,DruidDataSource> dataSourceList = new HashMap<>();
 
@@ -43,6 +44,15 @@ public class BasketConfiguration{
 	/*存放第其余优先级的sqlXml文件*/
 	public static final LinkedHashMap<String, SqlXmlFileHolder> SQLXMLS_OTHER_PRIORITY = new LinkedHashMap<>() ;
 
+	/*存放加载的xml文件信息*/
+	public static final HashMap<String,XmlFileInfo> XMLFILELIST = new HashMap<>();
+
+	/*存放框架初始化的时间*/
+	public static Long initTime;
+
+	/*存放框架重新加载xml文件的间隔时间*/
+	public static Integer initInterval;
+
 	/***
 	 * 初始化配置
 	 * */
@@ -50,6 +60,7 @@ public class BasketConfiguration{
 		this.mappingLocation = (String)properties.get("mappingLocation");
 		//this.dbType = (String)properties.get("dbType");
 		this.loadStrategy = (String)properties.get("loadStrategy");
+		this.initInterval = (Integer)properties.get("initInterval");
 		initDataSource(properties);
 
 
