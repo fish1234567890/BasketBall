@@ -1,5 +1,6 @@
 package com.xyz.controller;
 
+import com.xyz.Translator.SelectTranslator;
 import com.xyz.Translator.Translator;
 import com.xyz.entity.BasketConfiguration;
 import com.xyz.entity.RunableSql;
@@ -7,7 +8,6 @@ import com.xyz.executor.SelectExecutor;
 import com.xyz.preparation.SqlXmlFullPreparation;
 import com.xyz.util.CommonUtil.CollectionUtils;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +28,13 @@ public class QueryTemplete implements QueryTempleteInterface {
 	private Translator translator;
 
 	private SqlXmlFullPreparation preparation;
-	public QueryTemplete(SelectExecutor executor,Translator translator){
+
+
+
+	public QueryTemplete(){
 		this.executor = new SelectExecutor();
-		this.translator = new Translator();
+		this.translator = new SelectTranslator();
+		this.preparation = new SqlXmlFullPreparation(BasketConfiguration.mappingLocation);
 	}
 
 	public <T> List<T> query(String id,Class<T> resultType) throws Exception{
@@ -78,11 +82,11 @@ public class QueryTemplete implements QueryTempleteInterface {
 
 
 	private <T> List<T> baseQuery(String id, Map<String,Object> params,Class<T> resultType) throws Exception {
-
+		//热加载存放sql的xml文件
 		preparation.reloadXml();
 		//预编译sql，获取最终可执行的sql
 		RunableSql<T> runableSql = translator.getRunableSql(id, params, resultType);
 		//执行sql
-		return executor.execute(runableSql);
+		return (List<T>)executor.execute(runableSql);
 	}
 }

@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CollectionUtils {
 
@@ -44,5 +45,15 @@ public class CollectionUtils {
 
 
         return map;
+    }
+
+    public static Map<String,Object> getIntersection(Map<String,Object> map1,Map<String,Object> map2){
+        Map<String, Object> realParams = new HashMap<>();
+        Set<String> keys = map1.keySet();
+        for(String key : keys){
+            Object o = map2.get(key);
+            realParams.put(key,o);
+        }
+        return realParams;
     }
 }

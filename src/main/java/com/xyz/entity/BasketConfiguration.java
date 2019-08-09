@@ -7,6 +7,7 @@ import java.util.*;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.xyz.preparation.InitManager;
 import com.xyz.preparation.ParsingStartegyFactory;
+import com.xyz.preparation.SqlXmlFullPreparation;
 
 
 /**
@@ -17,9 +18,7 @@ import com.xyz.preparation.ParsingStartegyFactory;
  * 	这个类起到存放框架的配置信息和初始化框架的作用，是框架的入口
  * 	这个类实例化的时候可以加载所有的Sqlxml文件。
  * 	使用单例的形式保证全局只有一份
- * 	与Spring集成使用的时候，只需要在applicationContext.xml文件中声明这个bean并且把需要的参数注入就可以
- * 	不需要在使用额外的xml配置文件
- * 	
+ *
  * 
  * 	@author xuchongguang
  * 	@since 2018-11-11
@@ -36,7 +35,7 @@ public class BasketConfiguration{
 	private String dbType;
 
 	/* sqlXml文件的加载策略（1：全部加载  2：优先级加载（推荐）） */
-	private String loadStrategy;
+	//private String loadStrategy;
 
 	/*存放第一优先级的sqlXml文件*/
 	public static final HashMap<String, SqlXmlFileHolder> SQLXMLS_HIGH_PRIORITY = new HashMap<>() ;
@@ -59,8 +58,8 @@ public class BasketConfiguration{
 	public BasketConfiguration(Properties properties) {
 		this.mappingLocation = (String)properties.get("mappingLocation");
 		//this.dbType = (String)properties.get("dbType");
-		this.loadStrategy = (String)properties.get("loadStrategy");
-		this.initInterval = (Integer)properties.get("initInterval");
+		//this.loadStrategy = (String)properties.get("loadStrategy");
+		this.initInterval = Integer.valueOf((String)properties.get("initInterval"));
 		initDataSource(properties);
 
 
@@ -87,8 +86,10 @@ public class BasketConfiguration{
 	}
 
 	private void initSqlFile() {
-		InitManager strategy = ParsingStartegyFactory.getInstance(loadStrategy);
-		strategy.init(mappingLocation);
+		/*InitManager strategy = ParsingStartegyFactory.getInstance(loadStrategy);
+		strategy.init(mappingLocation);*/
+		SqlXmlFullPreparation preparation = new SqlXmlFullPreparation(mappingLocation);
+		preparation.init();
 	}
 
 

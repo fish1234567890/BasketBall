@@ -4,34 +4,26 @@ import com.xyz.entity.BasketConfiguration;
 import com.xyz.entity.RunableSql;
 import com.xyz.entity.SqlDefinition;
 import com.xyz.entity.SqlXmlFileHolder;
+import com.xyz.util.CommonUtil.CollectionUtils;
+import com.xyz.util.CommonUtil.StringUtils;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
+import net.sf.jsqlparser.parser.CCJSqlParserManager;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.statement.select.SelectBody;
+import net.sf.jsqlparser.statement.select.SelectItem;
 
+import java.io.StringReader;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class Translator {
+public interface Translator {
 
-    public <T> RunableSql<T> getRunableSql(String id, Map<String,Object> params,Class<T> resultType) throws ClassNotFoundException {
-        //根据sql的id获取SqlDefinition
-        SqlDefinition definition = getSqlDefinition(id);
-        //解析sql语句，拼装参数
-        getTranslatedSql(definition.getSqlFormate(),params);
+    <T> RunableSql<T> getRunableSql(String id, Map<String,Object> params,Class<T> resultType);
 
-        RunableSql<T> runableSql = new RunableSql<>();
-        runableSql.setSql(definition.getSqlFormate());
-        runableSql.setDatasource(BasketConfiguration.dataSourceList.get(definition.getDataSource()));
-        runableSql.setResultType(resultType);
 
-        return runableSql;
-    }
-
-    private static SqlDefinition getSqlDefinition(String id) {
-        String[] split = id.split("\\.");
-        //根据前缀获取SqlXmlFileHolder
-        SqlXmlFileHolder holder = BasketConfiguration.SQLXMLS_HIGH_PRIORITY.get(split[0]);
-        //根据后缀获取SqlXmlFileHolder中的一个SqlDefinition
-        return holder.map.get(split[1]);
-    }
-
-    private String getTranslatedSql(String originalSql,Map<String,Object> params){
-        return "";
-    }
 }

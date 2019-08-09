@@ -18,27 +18,27 @@ public class TestClass {
         properties.setProperty("datasource1.url","jdbc:mysql://localhost:3306/mysystem");
         properties.setProperty("datasource1.driverClassName","com.mysql.jdbc.Driver");
         properties.setProperty("dbType","mysql");
+        properties.setProperty("initInterval","1000");
         BasketConfiguration configuration = new BasketConfiguration(properties);
 
 
         //开始CRUD
-        /*QueryTemplete templete = new QueryTemplete();
+        QueryTemplete templete = new QueryTemplete();
         try{
             User user = new User();
             user.setId(1);
             List<User> query = templete.query("sql_first.mysql1", user, User.class);
-            templete.query("")
             System.out.println("结束");
         }catch(Exception e){
             e.printStackTrace();
-        }*/
+        }
 
-        ModifyTemplete templete1 = new ModifyTemplete();
+        /*ModifyTemplete templete1 = new ModifyTemplete();
         try {
             templete1.execute("sql_first.mysql2");
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 }

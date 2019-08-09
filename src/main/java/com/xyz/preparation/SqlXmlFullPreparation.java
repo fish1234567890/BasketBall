@@ -25,15 +25,13 @@ public class SqlXmlFullPreparation implements InitManager{
 
 	private String mappingLocation;
 
-	public SqlXmlFullPreparation() {
+	public SqlXmlFullPreparation(String mappingLocation) {
 		resolver = XmlResolver.Instance.XmlResolver.getInstance();
+		this.mappingLocation = mappingLocation;
 	}
 	
-	public void init(String mappingLocation) {
-		//赋值语句不要放在这里，后期优化下
-		this.mappingLocation = mappingLocation;
-
-		File sqlFiles = FileUtils.getFromClassByName(mappingLocation);
+	public void init() {
+		File sqlFiles = FileUtils.getFromClassPathByName(mappingLocation);
 		for(File sqlFile : sqlFiles.listFiles()) {
 			loadSingleXmlFile(sqlFile);
 		}
@@ -44,7 +42,7 @@ public class SqlXmlFullPreparation implements InitManager{
 		if(System.currentTimeMillis() - BasketConfiguration.initTime < BasketConfiguration.initInterval){
 			return;
 		}
-		File sqlFiles = FileUtils.getFromClassByName(mappingLocation);
+		File sqlFiles = FileUtils.getFromClassPathByName(mappingLocation);
 		for (File sqlFile : sqlFiles.listFiles()) {
 			XmlFileInfo xmlFileInfo = BasketConfiguration.XMLFILELIST.get(sqlFile.getName());
 			if(sqlFile.lastModified() != xmlFileInfo.getLastModifyTime()){

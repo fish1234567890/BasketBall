@@ -1,5 +1,7 @@
 package com.xyz.preparation;
 
+import com.xyz.util.XmlResolver;
+
 import java.io.File;
 
 /**
@@ -15,8 +17,17 @@ import java.io.File;
  * */
 public class SqlXmlPriorityPreparation implements InitManager{
 
+	private XmlResolver resolver ;
+
+	private String mappingLocation;
+
+	public SqlXmlPriorityPreparation(String mappingLocation) {
+		resolver = XmlResolver.Instance.XmlResolver.getInstance();
+		this.mappingLocation = mappingLocation;
+	}
+
 	@Override
-	public void init(String mappingLocation) {
+	public void init() {
 		File sqlFiles = new File(mappingLocation);
 		if(!sqlFiles.exists()) {
 			throw new RuntimeException("映射文件路径不存在");
@@ -27,7 +38,7 @@ public class SqlXmlPriorityPreparation implements InitManager{
 		}
 		
 	}
-	public enum Instance {
+/*	public enum Instance {
 		
 		SqlXmlPriorityPreparation;		
 		private SqlXmlPriorityPreparation instance = null;
@@ -39,5 +50,5 @@ public class SqlXmlPriorityPreparation implements InitManager{
 			return instance;
 		}
 		
-	}
+	}*/
 }

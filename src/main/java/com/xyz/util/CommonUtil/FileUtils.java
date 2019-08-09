@@ -4,7 +4,7 @@ import java.io.File;
 
 public class FileUtils {
 
-    public static File getFromClassByName(String path){
+    public static File getFromClassPathByName(String path){
         final String absolutePath = FileUtils.class.getResource(path).getFile();
         final File sqlFiles = new File(absolutePath);
         if(!sqlFiles.exists()) {

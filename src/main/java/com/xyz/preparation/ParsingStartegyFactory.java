@@ -17,7 +17,7 @@ public class ParsingStartegyFactory {
 	
 	public static final String STRATEGY_FULL = "0";
 	
-	public static InitManager getInstance(String strategy) {
+	/*public static InitManager getInstance(String strategy) {
 		if(strategy == null || "".equals(strategy) || STRATEGY_PRIORITY.equals(strategy)) {
 			return SqlXmlPriorityPreparation.Instance.SqlXmlPriorityPreparation.getInstance();
 		}else if(STRATEGY_FULL.equals(strategy)){
@@ -25,5 +25,5 @@ public class ParsingStartegyFactory {
 		}else {
 			throw new RuntimeException("无法匹配相应的策略");
 		}
-	} 
+	} */
 }

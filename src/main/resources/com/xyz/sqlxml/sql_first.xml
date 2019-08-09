@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <filename value="sql_first">
 	<sql id="mysql1" resultType="com.xyz.entity.User" datasource="datasource1">
-		select * from com_user_baseinfo
+		select * from com_user_baseinfo where id = #{id}
 	</sql>
 
 	<sql id="mysql2"  datasource="datasource1">

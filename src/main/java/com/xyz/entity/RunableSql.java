@@ -1,6 +1,7 @@
 package com.xyz.entity;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 public class RunableSql<T> {
 
@@ -9,6 +10,16 @@ public class RunableSql<T> {
     private DataSource datasource;
 
     private Class<T> resultType;
+
+    private Map<String,Object> RealParams;
+
+    public Map<String, Object> getRealParams() {
+        return RealParams;
+    }
+
+    public void setRealParams(Map<String, Object> realParams) {
+        RealParams = realParams;
+    }
 
     public String getSql() {
         return sql;
