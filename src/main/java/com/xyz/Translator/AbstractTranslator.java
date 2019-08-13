@@ -6,15 +6,12 @@ import com.xyz.entity.SqlDefinition;
 import com.xyz.entity.SqlXmlFileHolder;
 import com.xyz.util.CommonUtil.CollectionUtils;
 import com.xyz.util.CommonUtil.StringUtils;
-import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.parser.CCJSqlParserManager;
-import net.sf.jsqlparser.statement.select.PlainSelect;
 
-import java.io.StringReader;
 import java.util.Map;
-import java.util.Set;
 
 public abstract class AbstractTranslator implements Translator {
+
+    protected ExpressionHandler expressionHandler = new ExpressionHandler();
 
     @Override
     public <T> RunableSql<T> getRunableSql(String id, Map<String,Object> params,Class<T> resultType)  {

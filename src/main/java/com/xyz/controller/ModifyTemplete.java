@@ -1,5 +1,6 @@
 package com.xyz.controller;
 
+import com.xyz.Translator.SelectTranslator;
 import com.xyz.Translator.Translator;
 import com.xyz.entity.RunableSql;
 import com.xyz.executor.ModifyExecutor;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class ModifyTemplete {
 
     final ModifyExecutor executor = new ModifyExecutor();
-    final private Translator translator = new Translator();
+    final private Translator translator = new SelectTranslator();
     /**
      * 根据一个sql的id进行查询
      *

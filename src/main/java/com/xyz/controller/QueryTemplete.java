@@ -83,10 +83,10 @@ public class QueryTemplete implements QueryTempleteInterface {
 
 	private <T> List<T> baseQuery(String id, Map<String,Object> params,Class<T> resultType) throws Exception {
 		//热加载存放sql的xml文件
-		preparation.reloadXml();
+        preparation.reloadXml();
 		//预编译sql，获取最终可执行的sql
 		RunableSql<T> runableSql = translator.getRunableSql(id, params, resultType);
 		//执行sql
-		return (List<T>)executor.execute(runableSql);
+		return executor.execute(runableSql);
 	}
 }
