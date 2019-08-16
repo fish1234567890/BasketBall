@@ -31,7 +31,22 @@ import org.xml.sax.helpers.DefaultHandler;
  * 	@version 1.0.0
  * */
 public class XmlResolver extends DefaultHandler{
-	
+
+	/*枚举实现单例*/
+	public enum Instance {
+
+		XmlResolver;
+		private XmlResolver instance = null;
+
+		private Instance() {
+			instance = new XmlResolver();
+		}
+		public XmlResolver getInstance() {
+			return instance;
+		}
+
+	}
+
 	/*因为SAXParser是线程不安全的，因为框架的解析式动态的，所有为了追求解析的速度，采用ThreadLoacl来避免枷锁*//*
 	private ThreadLocal<SAXParser> parser = new ThreadLocal<SAXParser>() ;
 	protected SAXParser initialValue() {
@@ -48,20 +63,7 @@ public class XmlResolver extends DefaultHandler{
 		return newParser;
 	}*/
 	
-	/*枚举实现单例*/
-	public enum Instance {
-		
-		XmlResolver;		
-		private XmlResolver instance = null;
-		
-		private Instance() {
-			instance = new XmlResolver();
-		}
-		public XmlResolver getInstance() {
-			return instance;
-		}
-		
-	}
+
 
 	private SqlXmlFileHolder holder = null;
 	private String fileName = null;

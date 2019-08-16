@@ -1,7 +1,7 @@
 package com.xyz.controller;
 
-import com.xyz.Translator.SelectTranslator;
-import com.xyz.Translator.Translator;
+import com.xyz.translator.SelectTranslator;
+import com.xyz.translator.Translator;
 import com.xyz.entity.RunableSql;
 import com.xyz.executor.ModifyExecutor;
 

@@ -6,7 +6,6 @@ import com.xyz.util.PropertyResolver;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class BasketStartServlet extends HttpServlet {

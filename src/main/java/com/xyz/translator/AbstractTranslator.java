@@ -1,4 +1,4 @@
-package com.xyz.Translator;
+package com.xyz.translator;
 
 import com.xyz.entity.BasketConfiguration;
 import com.xyz.entity.RunableSql;
